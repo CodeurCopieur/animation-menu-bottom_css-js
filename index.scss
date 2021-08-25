@@ -1,0 +1,128 @@
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: sans-serif;
+}
+
+:root {
+  --base-grid: 5px;
+  --link-size: calc(var(--base-grid)*20);
+}
+
+body {
+  height: 100vh;
+}
+$fg:#ff4081;
+$menu-items:9+1;
+$delay-init: 0.08s;
+$delay-interval: 0.1s;
+
+
+
+%ball{
+  background:$fg;
+  border-radius:100%;
+  width:100px;
+  height:100px;
+  position: absolute;
+  top: 20px;
+  color: #fff;
+  text-align: center;
+  line-height: 100px;
+  transform:translate3d(0,0,0);
+  transition:transform ease-out 200ms;
+}
+
+.component {
+  position: fixed;
+  right: 200px;
+  bottom: 200px;
+
+  &__menu {
+    width: var(--link-size);
+    height: var(--link-size);
+
+    .btn {
+        @extend %ball;
+        z-index:2;
+        transition-timing-function:cubic-bezier(0.175, 0.885, 0.320, 1.275);
+        transition-duration:400ms;
+        transform:scale(1.1,1.1) translate3d(0,0,0);
+        cursor:pointer;
+
+        &:hover{
+          transform:scale(1.2,1.2) translate3d(0,0,0);
+        }
+    }
+
+    .menu-item{
+
+      @extend %ball;
+
+      &:hover{
+        background:white;
+        color:$fg;
+      }
+      @for $i from 1 through $menu-items{
+        &:nth-child(#{$i+2}){
+          transition-duration:180ms;
+        }
+      }
+    }
+
+    .menu-open:checked+.btn{
+      transition-timing-function:linear;
+      transition-duration:200ms;
+      transform:scale(0.8,0.8) translate3d(0,0,0);
+    }
+
+    .menu-open:checked~.menu-item {
+      transition-timing-function:cubic-bezier(0.935, 0.000, 0.340, 1.330);
+      
+      &:nth-child(3) {
+        transition-duration: 180ms;
+        transform: translate3d(0, -160px, 0);
+        //transform: translate3d(0.18361px, -104.99997px, 0);
+      }
+
+      &:nth-child(4) {
+        transition-duration: 280ms;
+        transform: translate3d(130px, -115px, 0);
+        //transform: translate3d(90.9466px, -52.47586px, 0);
+      }
+
+      &:nth-child(5) {
+        transition-duration: 380ms;
+        transform: translate3d(150px, 0, 0);
+        //transform: translate3d(90.9466px, 52.47586px, 0);
+      }
+
+      &:nth-child(6) {
+        transition-duration: 480ms;
+        transform: translate3d(130px, 115px, 0);
+      }
+
+      &:nth-child(7) {
+        transition-duration: 580ms;
+        transform: translate3d(0, 160px, 0);
+      }
+
+      &:nth-child(8) {
+        transition-duration: 680ms;
+        transform: translate3d(-130px, 115px, 0);
+      }
+
+      &:nth-child(9) {
+        transition-duration: 680ms;
+        transform: translate3d(-150px, 0, 0);
+      }
+
+      &:nth-child(10) {
+        transition-duration: 680ms;
+        transform: translate3d(-130px, -115px, 0);
+      }
+    }
+  }
+}
